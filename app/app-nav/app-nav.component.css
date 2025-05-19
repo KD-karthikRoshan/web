@@ -1,0 +1,17 @@
+.navbar-logo {
+    height: 50px;
+    margin-right: 10px;
+  }
+
+  .nav-link:hover {
+    color: #3e5061 !important;
+  }
+
+  .nav-link {
+    color: white !important;
+  }
+
+  .navbar-nav {
+    display: flex;
+    justify-content: flex-end; /* Align items to the end */
+  }

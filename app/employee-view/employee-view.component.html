@@ -1,0 +1,128 @@
+
+<div *ngIf="isCreateMode" class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card border-primary rounded-lg">
+          <div class="card-header bg-primary text-white">
+            Create Employee
+          </div>
+          <div class="card-body">
+  <!-- Create Form -->
+  <div >
+    <form (submit)="saveEmployee(newEmployee)" class="mt-3"  #createForm="ngForm">
+      <div class="form-group">
+        <label for="firstName">First Name:</label>
+        <input type="text" [(ngModel)]="newEmployee.firstName" name="firstName" id="firstName" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name:</label>
+        <input type="text" [(ngModel)]="newEmployee.lastName" name="lastName" id="lastName" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="dateOfBirth">Date of Birth:</label>
+        <input type="text" [(ngModel)]="newEmployee.dateOfBirth" [placeholder]="generateDateOfBirthPlaceholder()" name="dateOfBirth" id="dateOfBirth" class="form-control"  required pattern="\d{2}-\d{2}-\d{4}">
+        <div *ngIf="createForm.controls['dateOfBirth'].errors?.['pattern']" class="text-danger">Date of Birth must be in the format dd-mm-yyyy</div>
+      </div>
+      <div class="form-group">
+        <label for="annualSalary">Annual Salary:</label>
+        <input type="text" [(ngModel)]="newEmployee.annualSalary" name="annualSalary" id="annualSalary" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="departmentId">Department:</label>
+        <select [(ngModel)]="newEmployee.departmentId" name="departmentId" id="departmentId" class="form-control" required>
+          <option *ngFor="let department of departments" [value]="department.departmentId">{{ department.departmentName }}</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Save</button>
+      <button type="button" (click)="cancelCreate()" class="btn btn-secondary">Cancel</button>
+    </form>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div *ngIf="isEditMode" class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card border-primary rounded-lg">
+          <div class="card-header bg-primary text-white">
+            Update Employee
+          </div>
+          <div class="card-body">
+<div *ngIf="isEditMode" class="container">
+    <form (submit)="updateEmployee(editedEmployee)" class="mt-3"   #updateForm="ngForm">
+      <div class="form-group">
+        <label for="firstName">First  Name:</label>
+        <input type="text" [(ngModel)]="editedEmployee.firstName" value="{{editedEmployee.firstName}}" name="firstName" id="firstName" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last  Name:</label>
+        <input type="text" [(ngModel)]="editedEmployee.lastName" value="{{editedEmployee.lastName}}" name="lastName" id="lastName" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="dateOfBirth">Date of Birth:</label>
+        <input type="text" [(ngModel)]="editedEmployee.dateOfBirth" value="{{editedEmployee.dateOfBirth}}" name="dateOfBirth" id="dateOfBirth" class="form-control"required pattern="\d{2}-\d{2}-\d{4}">
+        <div *ngIf="updateForm.controls['dateOfBirth'].errors?.['pattern']" class="text-danger">Date of Birth must be in the format dd-mm-yyyy</div>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Annual Salary:</label>
+        <input type="text" [(ngModel)]="editedEmployee.annualSalary" value="{{editedEmployee.annualSalary}}" name="annualSalary" id="annualSalary" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="departmentId">Department:</label>
+        <select [(ngModel)]="editedEmployee.departmentId" name="departmentId" id="departmentId" class="form-control" required>
+          <option *ngFor="let department of departments" [value]="department.departmentId">{{ department.departmentName }}</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="lastName">Location:</label>
+        <input type="text" disabled="true" [(ngModel)]="editedEmployee.location" value="{{editedEmployee.location}}" name="location" id="location" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Update</button>
+      <button type="button" (click)="cancelEdit()" class="btn btn-secondary">Cancel</button>
+    </form>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="container mt-5">
+    <h2 class="mb-4">Employee Table</h2>   <!-- Create Employee Button -->
+    <button type="button" class="btn btn-success mb-3" (click)="createEmployee()">Create Employee</button>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">S.no</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Date of Birth</th>
+            <th scope="col">Annual Salary</th>
+            <th scope="col">Department Name</th>
+            <th scope="col">Location</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of employees; let i = index">
+            <th scope="row">{{ i+1 }}</th>
+            <td>{{ employee.firstName }}</td>
+            <td>{{ employee.lastName }}</td>
+            <td>{{ employee.dateOfBirth }}</td>
+            <td>{{ employee.annualSalary }}</td>
+            <td>{{ employee.departmentName }}</td>
+            <td>{{ employee.location }}</td>
+            <td><button   (click)="editEmployee(employee)" class="btn btn-primary">Edit</button></td>
+            <td><button (click)="deleteEmployee(employee.employeeId)" class="btn btn-danger">Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
